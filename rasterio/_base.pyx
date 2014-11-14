@@ -548,6 +548,23 @@ cdef class DatasetReader(object):
             retval[i] = (color.c1, color.c2, color.c3, color.c4)
         return retval
 
+    def overview_shapes(self, bidx):
+        cdef void *hBand
+        cdef void *hOvr
+        if self._hds == NULL:
+            raise ValueError("can't read closed raster file")
+        if bidx not in self.indexes:
+            raise ValueError("Invalid band index")
+        hBand = _gdal.GDALGetRasterBand(self._hds, bidx)
+        if hBand == NULL:
+            raise ValueError("NULL band")
+        shapes = []
+        for i in range(_gdal.GDALGetOverviewCount(hBand)):
+            hOvr = _gdal.GDALGetOverview(hBand, i)
+            shapes.append((_gdal.GDALGetRasterBandXSize(hOvr),
+                           _gdal.GDALGetRasterBandYSize(hOvr)))
+        return shapes
+
     @property
     def kwds(self):
         return self.tags(ns='rio_creation_kwds')

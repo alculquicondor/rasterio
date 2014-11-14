@@ -103,8 +103,12 @@ cdef extern from "gdal.h" nogil:
 
     const GDALColorEntry *GDALGetColorEntry (void *hTable, int)
     void GDALSetColorEntry (void *hTable, int i, const GDALColorEntry *poEntry)
+    int GDALGetRasterBandXSize (void *hBand)
+    int GDALGetRasterBandYSize (void *hBand)
     int GDALSetRasterColorTable (void *hBand, void *hTable)
     void *GDALGetRasterColorTable (void *hBand)
+    void * GDALGetOverview(void *band, int i)
+    int GDALGetOverviewCount(void *band)
     void *GDALCreateColorTable (int)
     void GDALDestroyColorTable (void *hTable)
     int GDALGetColorEntryCount (void *hTable)
