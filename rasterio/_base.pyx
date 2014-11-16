@@ -561,8 +561,8 @@ cdef class DatasetReader(object):
         shapes = []
         for i in range(_gdal.GDALGetOverviewCount(hBand)):
             hOvr = _gdal.GDALGetOverview(hBand, i)
-            shapes.append((_gdal.GDALGetRasterBandXSize(hOvr),
-                           _gdal.GDALGetRasterBandYSize(hOvr)))
+            shapes.append((_gdal.GDALGetRasterBandYSize(hOvr),
+                           _gdal.GDALGetRasterBandXSize(hOvr)))
         return shapes
 
     @property
